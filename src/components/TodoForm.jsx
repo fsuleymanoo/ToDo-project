@@ -29,13 +29,19 @@ function TodoForm({ addTask }) {
     setTask("");
   };
 
+  let option = { year: "numeric", month: "long", day: "numeric" };
+  let formattedDate = new Date().toLocaleDateString("en-US", option);
+
   return (
     <div className="form-container mb-1">
-      <h2 className="fw-bold text-info-emphasis my-3 text-center">Todo List</h2>
+      <h2 className="fw-bold text-info-emphasis my-3 text-center fs-2">
+        Todo List 
+        <span className="fs-4 text-danger-emphasis ms-2"> {formattedDate}</span>
+      </h2>
 
       <form onSubmit={handleSubmit} className="bg-white">
         <div className="bg-white d-flex">
-          <input type="checkbox" className="form-check-input ms-2 my-auto" />
+          <input type="checkbox" className="form-check-input rounded ms-2 me-1 my-auto" />
           <input
             onChange={handleTaskInput}
             id="form-input"

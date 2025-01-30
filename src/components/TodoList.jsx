@@ -14,7 +14,7 @@ function TodoList({ tasks, removeTask }) {
       </div>
 
       <div className="d-flex justify-content-between small-text bg-white p-1 mt-1 text-info-emphasis">
-        <div>3 task left</div>
+        <div><span>{tasks.length}</span> task left</div>
         <div className="d-flex gap-2">
           <div>All</div>
           <div>Active</div>
