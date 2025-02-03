@@ -3,8 +3,11 @@ import { MdAddBox } from "react-icons/md";
 import { isValidTask } from "../utils.js";
 
 function TodoForm({ addTask }) {
+
+
   const [task, setTask] = useState("");
   const [validTask, setValidTask] = useState(true);
+  
 
   const handleTaskInput = (e) => {
     const value = e.target.value;
@@ -22,6 +25,7 @@ function TodoForm({ addTask }) {
     const taskData = {
       id: Date.now(),
       task: task,
+      isComplete: false
     };
 
     addTask(taskData);
@@ -45,7 +49,7 @@ function TodoForm({ addTask }) {
           <input
             onChange={handleTaskInput}
             id="form-input"
-            className={`form-control border-0 ${
+            className={`form-control border-0  bg-light ${
               validTask ? "" : "is-invalid"
             } opacity-75`}
             type="text"

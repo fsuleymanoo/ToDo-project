@@ -1,9 +1,11 @@
 import { useState } from "react";
 import TodoForm from "./components/TodoForm";
 import TodoList from "./components/TodoList";
+import Theme from "./components/Theme";
 
 function App() {
   const [tasks, setTasks] = useState([]);
+
 
   const addTask = (newTask) => {
     setTasks((prev) => [...prev, newTask]);
@@ -13,12 +15,34 @@ function App() {
     setTasks((prev) => prev.filter((task) => task.id !== id));
   };
 
+  const clearCompleted = () => {
+    setTasks((prev) => prev.filter((task) => !task.isComplete));
+  };
+
+
+  const checkCompleted = (id, isComplete) => {
+    setTasks((prev) =>
+      prev.map((task) => (task.id === id ? { ...task, isComplete } : task))
+    );
+  };
+
+  const notCompletedCount = (tasks.filter(task => !task.isComplete)).length;
+
+
+
   return (
     <>
-      <div className="col-lg-4 col-md-5 col-sm-7 mx-auto">
+      <Theme />
+      <div className="col-8 col-lg-4 col-md-5 mx-auto">
         <TodoForm addTask={addTask} />
 
-        <TodoList tasks={tasks} removeTask={removeTask} />
+        <TodoList
+          tasks={tasks}
+          removeTask={removeTask}
+          clearCompleted={clearCompleted}
+          checkCompleted={checkCompleted}
+          notCompletedCount={notCompletedCount}
+        />
       </div>
     </>
   );
