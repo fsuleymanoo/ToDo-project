@@ -45,7 +45,7 @@ function TodoForm({ addTask }) {
 
       <form onSubmit={handleSubmit} className="bg-white">
         <div className="bg-white d-flex">
-          <input type="checkbox" className="form-check-input rounded ms-2 me-1 my-auto" />
+          <input disabled type="checkbox" className="form-check-input rounded ms-2 me-1 my-auto" />
           <input
             onChange={handleTaskInput}
             id="form-input"

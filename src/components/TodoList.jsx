@@ -5,7 +5,10 @@ function TodoList({
   removeTask,
   clearCompleted,
   checkCompleted,
-  notCompletedCount
+  notCompletedCount,
+  handleFilter,
+  handleFilterChange,
+  filter
 }) {
   return tasks.length < 1 ? (
     <div className="container w-50 text-center  my-2 text-info-emphasis">
@@ -14,7 +17,7 @@ function TodoList({
   ) : (
     <div className="mx-auto">
       <div>
-        {tasks.map((task) => (
+        {handleFilter().map((task) => (
           <TodoCard
             key={task.id}
             task={task}
@@ -29,13 +32,13 @@ function TodoList({
           <span>{notCompletedCount}</span> {notCompletedCount>=2 ? "tasks" : "task"}  left
         </div>
         <div className="d-flex gap-2">
-          <div className="btn btn-sm p-0 f-btn active border-0">
+          <div onClick={() => handleFilterChange("All")} className={`btn btn-sm p-0 f-btn border-0 ${filter === "All" ? 'active' : ''}`}>
             All
           </div>
-          <div className="btn btn-sm p-0 f-btn">
+          <div onClick={() => handleFilterChange("Active")} className={`btn btn-sm p-0 f-btn border-0 ${filter === "Active" ? 'active' : ''}`}>
             Active
           </div>
-          <div className="btn btn-sm p-0 f-btn" >
+          <div onClick={() => handleFilterChange("Completed")} className={`btn btn-sm p-0 f-btn border-0 ${filter === "Completed" ? 'active' : ''}`}>
             Completed
           </div>
         </div>

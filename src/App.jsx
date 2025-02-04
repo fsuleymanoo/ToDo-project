@@ -5,7 +5,7 @@ import Theme from "./components/Theme";
 
 function App() {
   const [tasks, setTasks] = useState([]);
-
+  const [filter, setFilter] = useState("All");
 
   const addTask = (newTask) => {
     setTasks((prev) => [...prev, newTask]);
@@ -19,6 +19,20 @@ function App() {
     setTasks((prev) => prev.filter((task) => !task.isComplete));
   };
 
+  const handleFilter = () => {
+    switch (filter) {
+      case "All":
+        return tasks;
+      case "Active":
+        return tasks.filter((tasks) => !tasks.isComplete);
+      case "Completed":
+        return tasks.filter((tasks) => tasks.isComplete);
+    }
+  };
+
+  const handleFilterChange = (f) => {
+    setFilter(f);
+  }
 
   const checkCompleted = (id, isComplete) => {
     setTasks((prev) =>
@@ -26,9 +40,7 @@ function App() {
     );
   };
 
-  const notCompletedCount = (tasks.filter(task => !task.isComplete)).length;
-
-
+  const notCompletedCount = tasks.filter((task) => !task.isComplete).length;
 
   return (
     <>
@@ -42,6 +54,9 @@ function App() {
           clearCompleted={clearCompleted}
           checkCompleted={checkCompleted}
           notCompletedCount={notCompletedCount}
+          handleFilter={handleFilter}
+          handleFilterChange={handleFilterChange}
+          filter={filter}
         />
       </div>
     </>
