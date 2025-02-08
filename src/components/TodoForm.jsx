@@ -2,8 +2,9 @@ import { useState } from "react";
 import { MdAddBox } from "react-icons/md";
 import { isValidTask } from "../utils.js";
 
-function TodoForm({ addTask }) {
+function TodoForm({ fetchTasks }) {
 
+  const USER_ID = 9;
 
   const [task, setTask] = useState("");
   const [validTask, setValidTask] = useState(true);
@@ -15,7 +16,7 @@ function TodoForm({ addTask }) {
     setValidTask(isValidTask(task));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!isValidTask(task)) {
@@ -23,12 +24,31 @@ function TodoForm({ addTask }) {
     }
 
     const taskData = {
-      id: Date.now(),
-      task: task,
-      isComplete: false
+      user_id: USER_ID,
+      title: task,
+      completed: false,
     };
 
-    addTask(taskData);
+    try {
+      const options = {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(taskData)
+      }
+      const response = await fetch('http://3.15.206.121:5000/api/todos', options)
+      if(!response.ok) {
+        throw new Error('Error: ', response.status)
+      }
+
+      fetchTasks();
+
+    } catch (error) {
+      console.log(error)
+    }
+
+
+
+    
 
     setTask("");
   };

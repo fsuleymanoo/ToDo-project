@@ -2,13 +2,14 @@ import TodoCard from "./TodoCard";
 
 function TodoList({
   tasks,
-  removeTask,
   clearCompleted,
   checkCompleted,
   notCompletedCount,
   handleFilter,
   handleFilterChange,
-  filter
+  filter,
+  fetchTasks,
+  setRefresh
 }) {
   return tasks.length < 1 ? (
     <div className="container w-50 text-center  my-2 text-info-emphasis">
@@ -21,8 +22,9 @@ function TodoList({
           <TodoCard
             key={task.id}
             task={task}
-            removeTask={removeTask}
             checkCompleted={checkCompleted}
+            fetchTasks={fetchTasks}
+            setRefresh={setRefresh}
           />
         ))}
       </div>
