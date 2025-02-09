@@ -10,29 +10,26 @@ function App() {
 
   const USER_ID = 9;
 
-
-
   const fetchTasks = async () => {
     try {
-      const response = await fetch("http://3.15.206.121:5000/api/todos?user_id=" + USER_ID)
+      const response = await fetch(
+        "http://3.15.206.121:5000/api/todos?user_id=" + USER_ID
+      );
       const data = await response.json();
       console.log("Tasks: ", data);
-      if (response.status == 404){
+      if (response.status == 404) {
         setTasks([]);
-        return
+        return;
       }
       setTasks(data);
-
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   useEffect(() => {
-  fetchTasks();
-
+    fetchTasks();
   }, [refresh]);
-
 
   const removeTask = (id) => {
     setTasks((prev) => prev.filter((task) => task.id !== id));
@@ -55,7 +52,7 @@ function App() {
 
   const handleFilterChange = (f) => {
     setFilter(f);
-  }
+  };
 
   const checkCompleted = (id, completed) => {
     setTasks((prev) =>
@@ -81,7 +78,6 @@ function App() {
           handleFilterChange={handleFilterChange}
           filter={filter}
           fetchTasks={fetchTasks}
-
         />
       </div>
     </>

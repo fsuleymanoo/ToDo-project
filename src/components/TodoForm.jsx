@@ -3,12 +3,10 @@ import { MdAddBox } from "react-icons/md";
 import { isValidTask } from "../utils.js";
 
 function TodoForm({ fetchTasks }) {
-
   const USER_ID = 9;
 
   const [task, setTask] = useState("");
   const [validTask, setValidTask] = useState(true);
-  
 
   const handleTaskInput = (e) => {
     const value = e.target.value;
@@ -31,24 +29,22 @@ function TodoForm({ fetchTasks }) {
 
     try {
       const options = {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(taskData)
-      }
-      const response = await fetch('http://3.15.206.121:5000/api/todos', options)
-      if(!response.ok) {
-        throw new Error('Error: ', response.status)
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(taskData),
+      };
+      const response = await fetch(
+        "http://3.15.206.121:5000/api/todos",
+        options
+      );
+      if (!response.ok) {
+        throw new Error("Error: ", response.status);
       }
 
       fetchTasks();
-
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-
-
-
-    
 
     setTask("");
   };
@@ -59,17 +55,21 @@ function TodoForm({ fetchTasks }) {
   return (
     <div className="form-container mb-1">
       <h2 className="fw-bold text-info-emphasis my-3 text-center fs-2">
-        Todo List 
+        Todo List
         <span className="fs-4 text-danger-emphasis ms-2"> {formattedDate}</span>
       </h2>
 
       <form onSubmit={handleSubmit} className="bg-white">
         <div className="bg-white d-flex">
-          <input disabled type="checkbox" className="form-check-input rounded ms-2 me-1 my-auto" />
+          <input
+            disabled
+            type="checkbox"
+            className="form-check-input rounded ms-2 me-1 my-auto bg-white"
+          />
           <input
             onChange={handleTaskInput}
             id="form-input"
-            className={`form-control border-0  bg-light ${
+            className={`form-control border-0  bg-white ${
               validTask ? "" : "is-invalid"
             } opacity-75`}
             type="text"
@@ -77,7 +77,7 @@ function TodoForm({ fetchTasks }) {
             value={task}
           />
           <button
-            className="text-secondary btn"
+            className="text-primary btn"
             type="submit"
             disabled={!validTask}
           >
