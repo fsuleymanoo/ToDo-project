@@ -11,6 +11,32 @@ function TodoList({
   fetchTasks,
   setRefresh,
 }) {
+  const USER_ID = 9;
+  const handleDelete = async (elementID) => {
+    try {
+      const response = await fetch(
+        `http://3.15.206.121:5000/api/todos/${elementID}?user_id=${USER_ID}`,
+        {
+          method: "DELETE",
+        }
+      );
+      console.log("DELETE STATUS", response.status);
+      if (!response.ok) {
+        throw new Error(`Error deleting the task: ${elementID}`);
+      }
+
+      setRefresh((prev) => !prev);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const deleteAllCompleted = async () => {
+    const completedTasks = tasks.filter((item) => item.completed);
+    await completedTasks.map((task) => handleDelete(task.id));
+    setRefresh((prev) => !prev);
+  };
+
   return tasks.length < 1 ? (
     <div className="container w-50 text-center  my-2 text-info-emphasis">
       No tasks, add a task
@@ -62,7 +88,7 @@ function TodoList({
         </div>
         <div
           className="btn btn-info-emphasis p-0 f-btn"
-          onClick={clearCompleted}
+          onClick={deleteAllCompleted}
         >
           Clear Completed
         </div>
